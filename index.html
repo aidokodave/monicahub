@@ -133,7 +133,6 @@
             <p id="my-form-status"></p>
         </form>
     </div>
-
     <script>
         $(document).ready(function() {
             var targetDate = new Date();
@@ -172,17 +171,21 @@
                     url: form.attr("action"),
                     method: form.attr("method"),
                     data: formData,
-                    dataType: "json",
+                    dataType: "json", // Expect JSON response from Formspree
                     success: function(response) {
                         if (response.success) {
                             status.html("Thanks for your submission!");
                             form.trigger("reset");
                         } else {
-                            status.html("Oops! There was a problem submitting your form.");
+                            let errorMessage = "Oops! There was a problem submitting your form.";
+                            if (response.errors && Array.isArray(response.errors)) {
+                                errorMessage = response.errors.map(error => error.message).join(", ");
+                            }
+                            status.html(errorMessage);
                         }
                     },
-                    error: function() {
-                        status.html("Oops! There was a problem submitting your form.");
+                    error: function(xhr, textStatus, errorThrown) {
+                        status.html("Oops! There was a problem submitting your form. Error: " + textStatus);
                     }
                 });
             });
