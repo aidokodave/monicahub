@@ -124,14 +124,21 @@
         <h1>Site is Under Construction</h1>
         <p>We're working hard to bring you an amazing experience.  Please check back in:</p>
         <div id="countdown"></div>
-        <form id="my-form" action="https://formspree.io/f/your-form-id" method="POST">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="message">Message:</label>
-            <input type="text" id="message" name="message" required>
-            <button id="my-form-button" type="submit">Send Message</button>
-            <p id="my-form-status"></p>
-        </form>
+       <form
+  action="https://formspree.io/f/xanoyarp"
+  method="POST"
+>
+  <label>
+    Your email:
+    <input type="email" name="email">
+  </label>
+  <label>
+    Your message:
+    <textarea name="message"></textarea>
+  </label>
+  <!-- your other form fields go here -->
+  <button type="submit">Send</button>
+</form>
     </div>
     <script>
         $(document).ready(function() {
@@ -159,37 +166,7 @@
             updateCountdown();
             var intervalId = setInterval(updateCountdown, 1000);
 
-            // Formspree integration (jQuery version)
-            var form = $("#my-form");
-            var status = $("#my-form-status");
-
-            form.submit(function(event) {
-                event.preventDefault();
-                var formData = $(this).serialize();
-
-                $.ajax({
-                    url: form.attr("action"),
-                    method: form.attr("method"),
-                    data: formData,
-                    dataType: "json", // Expect JSON response from Formspree
-                    success: function(response) {
-                        if (response.success) {
-                            status.html("Thanks for your submission!");
-                            form.trigger("reset");
-                        } else {
-                            let errorMessage = "Oops! There was a problem submitting your form.";
-                            if (response.errors && Array.isArray(response.errors)) {
-                                errorMessage = response.errors.map(error => error.message).join(", ");
-                            }
-                            status.html(errorMessage);
-                        }
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        status.html("Oops! There was a problem submitting your form. Error: " + textStatus);
-                    }
-                });
-            });
-        });
+           
     </script>
 </body>
 </html>
